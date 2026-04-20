@@ -142,6 +142,10 @@ NEXT_PUBLIC_BACKEND_URL=https://backend-anda.example.com
 
 Backend Laravel belum saya daftarkan sebagai Vercel Service di `vercel.json`. Alasannya, backend ini adalah aplikasi PHP Laravel, sedangkan konfigurasi seperti `framework: "vite"` hanya cocok untuk build asset frontend, bukan untuk menjalankan runtime Laravel. Untuk saat ini, deploy backend ke hosting PHP yang kompatibel, misalnya VPS, Forge, shared hosting modern, atau platform PHP lain, lalu arahkan `NEXT_PUBLIC_BACKEND_URL` frontend ke domain backend tersebut.
 
+## Supabase Storage
+
+Panduan setup env, bucket, policy, dan testing upload end-to-end ada di [docs/supabase-storage.md](/abs/c:/xampp/htdocs/smanilum/docs/supabase-storage.md:1).
+
 ## Verifikasi Lokal yang Sudah Pernah Dilakukan
 
 - `php artisan route:list` sukses

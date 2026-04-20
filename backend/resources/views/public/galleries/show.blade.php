@@ -18,7 +18,7 @@
                 @forelse ($gallery->items as $item)
                     <div class="overflow-hidden rounded-[1.5rem] border border-blue-100 bg-white/90 shadow-soft">
                         @if ($item->file_path)
-                            <img src="{{ asset('storage/'.$item->file_path) }}" alt="{{ $item->title }}" class="h-64 w-full object-cover">
+                            <img src="{{ \App\Support\MediaUrl::url($item->file_path, 'images/default.jpg') }}" alt="{{ $item->title }}" class="h-64 w-full object-cover">
                         @else
                             <div class="h-64 bg-gradient-to-br from-blue-100 via-blue-200 to-blue-500"></div>
                         @endif

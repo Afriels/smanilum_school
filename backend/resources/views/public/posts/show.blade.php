@@ -134,7 +134,7 @@
         <div class="mx-auto grid w-full max-w-7xl gap-8 px-4 lg:grid-cols-[minmax(0,1fr)_340px]">
             <article class="overflow-hidden rounded-[2rem] border border-blue-100 bg-white/90 shadow-soft">
                 @if ($post->featured_image_path)
-                    <img src="{{ asset('storage/'.$post->featured_image_path) }}" alt="{{ $post->title }}" class="h-[280px] w-full object-cover md:h-[420px]">
+                    <img src="{{ \App\Support\MediaUrl::url($post->featured_image_path, 'images/default.jpg') }}" alt="{{ $post->title }}" class="h-[280px] w-full object-cover md:h-[420px]">
                 @else
                     <div class="h-[280px] w-full bg-gradient-to-br from-blue-100 via-blue-200 to-blue-500 md:h-[420px]"></div>
                 @endif

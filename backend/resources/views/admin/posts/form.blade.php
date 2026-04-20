@@ -49,7 +49,19 @@
                 </div>
                 <div>
                     <label class="mb-2 block text-sm font-semibold">Thumbnail / Gambar</label>
-                    <input type="file" name="featured_image" class="w-full rounded-2xl border border-blue-100 px-4 py-3">
+                    <input type="file" name="featured_image" accept=".jpg,.jpeg,.png,.webp" class="w-full rounded-2xl border border-blue-100 px-4 py-3">
+                    <p class="mt-2 text-xs leading-6 text-slate-500">Format: jpg, jpeg, png, webp. Maksimal 5MB.</p>
+                </div>
+                <div>
+                    <label class="mb-2 block text-sm font-semibold">Preview Thumbnail</label>
+                    <div class="overflow-hidden rounded-[1.25rem] border border-blue-100 bg-surface-soft">
+                        <img
+                            src="{{ \App\Support\MediaUrl::url($post->featured_image_path, 'images/default.jpg') }}"
+                            alt="Preview thumbnail berita"
+                            class="h-44 w-full object-cover"
+                            onerror="this.onerror=null;this.src='{{ \App\Support\MediaUrl::url(null, 'images/default.jpg') }}';"
+                        >
+                    </div>
                 </div>
                 <div class="grid gap-3">
                     <label class="flex items-center gap-3 text-sm"><input type="checkbox" name="is_featured" value="1" @checked(old('is_featured', $post->is_featured))> Featured post</label>
@@ -71,4 +83,3 @@
         </div>
     </form>
 @endsection
-

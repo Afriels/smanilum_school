@@ -16,7 +16,7 @@
             @foreach ($extracurriculars as $extracurricular)
                 <article class="overflow-hidden rounded-[1.75rem] border border-blue-100 bg-white/90 shadow-soft">
                     @if ($extracurricular->featured_image_path)
-                        <img src="{{ asset('storage/'.$extracurricular->featured_image_path) }}" alt="{{ $extracurricular->name }}" class="h-60 w-full object-cover">
+                        <img src="{{ \App\Support\MediaUrl::url($extracurricular->featured_image_path, 'images/default.jpg') }}" alt="{{ $extracurricular->name }}" class="h-60 w-full object-cover">
                     @else
                         <div class="h-60 bg-gradient-to-br from-blue-100 via-blue-200 to-blue-500"></div>
                     @endif
@@ -33,4 +33,3 @@
         </div>
     </section>
 @endsection
-

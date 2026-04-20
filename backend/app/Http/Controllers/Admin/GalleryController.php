@@ -32,7 +32,7 @@ class GalleryController extends Controller
     {
         $validated = $this->validateGallery($request);
         $validated['slug'] = $validated['slug'] ?: Str::slug($validated['title']);
-        $validated['cover_image_path'] = $this->storeImage($request->file('cover_image'), 'galleries');
+        $validated['cover_image_path'] = $this->storeSupabaseMedia($request->file('cover_image'), 'galleries', 'covers');
         $gallery = Gallery::query()->create($validated);
 
         if ($request->hasFile('gallery_images')) {
@@ -40,7 +40,7 @@ class GalleryController extends Controller
                 GalleryItem::query()->create([
                     'album_id' => $gallery->id,
                     'title' => $gallery->title.' '.($index + 1),
-                    'file_path' => $this->storeImage($image, 'galleries/items'),
+                    'file_path' => $this->storeSupabaseMedia($image, 'galleries', 'items'),
                     'thumbnail_path' => null,
                     'mime_type' => $image->getMimeType(),
                     'sort_order' => $index,
@@ -67,7 +67,7 @@ class GalleryController extends Controller
 
         if ($request->hasFile('cover_image')) {
             $this->deletePublicFile($gallery->cover_image_path);
-            $validated['cover_image_path'] = $this->storeImage($request->file('cover_image'), 'galleries');
+            $validated['cover_image_path'] = $this->storeSupabaseMedia($request->file('cover_image'), 'galleries', 'covers');
         }
 
         $gallery->update($validated);
@@ -78,7 +78,7 @@ class GalleryController extends Controller
                 GalleryItem::query()->create([
                     'album_id' => $gallery->id,
                     'title' => $gallery->title.' '.($nextSort + $index),
-                    'file_path' => $this->storeImage($image, 'galleries/items'),
+                    'file_path' => $this->storeSupabaseMedia($image, 'galleries', 'items'),
                     'thumbnail_path' => null,
                     'mime_type' => $image->getMimeType(),
                     'sort_order' => $nextSort + $index,
@@ -111,11 +111,10 @@ class GalleryController extends Controller
             'description' => ['nullable', 'string'],
             'type' => ['required', 'in:photo,video'],
             'status' => ['required', 'in:draft,published,archived'],
-            'cover_image' => $this->imageValidationRules(false),
-            'gallery_images.*' => $this->imageValidationRules(false),
+            'cover_image' => $this->imageValidationRules(false, ['jpg', 'jpeg', 'png', 'webp'], 5120),
+            'gallery_images.*' => $this->imageValidationRules(false, ['jpg', 'jpeg', 'png', 'webp'], 5120),
         ]) + [
             'is_featured' => $request->boolean('is_featured'),
         ];
     }
 }
-

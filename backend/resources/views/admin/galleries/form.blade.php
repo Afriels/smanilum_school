@@ -14,8 +14,27 @@
                     <div><label class="mb-2 block text-sm font-semibold">Status</label><select name="status" class="w-full rounded-2xl border border-blue-100 px-4 py-3">@foreach(['draft','published','archived'] as $status)<option value="{{ $status }}" @selected(old('status', $gallery->status) === $status)>{{ ucfirst($status) }}</option>@endforeach</select></div>
                 </div>
                 <div class="grid gap-5 md:grid-cols-2">
-                    <div><label class="mb-2 block text-sm font-semibold">Cover Album</label><input type="file" name="cover_image" class="w-full rounded-2xl border border-blue-100 px-4 py-3"></div>
-                    <div><label class="mb-2 block text-sm font-semibold">Upload Foto Galeri</label><input type="file" name="gallery_images[]" multiple class="w-full rounded-2xl border border-blue-100 px-4 py-3"></div>
+                    <div>
+                        <label class="mb-2 block text-sm font-semibold">Cover Album</label>
+                        <input type="file" name="cover_image" accept=".jpg,.jpeg,.png,.webp" class="w-full rounded-2xl border border-blue-100 px-4 py-3">
+                        <p class="mt-2 text-xs leading-6 text-slate-500">Format: jpg, jpeg, png, webp. Maksimal 5MB.</p>
+                    </div>
+                    <div>
+                        <label class="mb-2 block text-sm font-semibold">Upload Foto Galeri</label>
+                        <input type="file" name="gallery_images[]" accept=".jpg,.jpeg,.png,.webp" multiple class="w-full rounded-2xl border border-blue-100 px-4 py-3">
+                        <p class="mt-2 text-xs leading-6 text-slate-500">Foto akan diunggah ke bucket galeri di Supabase Storage.</p>
+                    </div>
+                </div>
+                <div>
+                    <div class="mb-2 block text-sm font-semibold">Preview Cover Album</div>
+                    <div class="overflow-hidden rounded-[1.25rem] border border-blue-100 bg-surface-soft">
+                        <img
+                            src="{{ \App\Support\MediaUrl::url($gallery->cover_image_path, 'images/default.jpg') }}"
+                            alt="Preview cover album"
+                            class="h-48 w-full object-cover"
+                            onerror="this.onerror=null;this.src='{{ \App\Support\MediaUrl::url(null, 'images/default.jpg') }}';"
+                        >
+                    </div>
                 </div>
                 <label class="flex items-center gap-3 text-sm"><input type="checkbox" name="is_featured" value="1" @checked(old('is_featured', $gallery->is_featured))> Tandai sebagai galeri unggulan</label>
                 @if($gallery->exists && $gallery->items->count())
@@ -25,7 +44,7 @@
                             @foreach($gallery->items as $item)
                                 <div class="overflow-hidden rounded-2xl border border-blue-100">
                                     @if($item->file_path)
-                                        <img src="{{ asset('storage/'.$item->file_path) }}" alt="{{ $item->title }}" class="h-32 w-full object-cover">
+                                        <img src="{{ \App\Support\MediaUrl::url($item->file_path, 'images/default.jpg') }}" alt="{{ $item->title }}" class="h-32 w-full object-cover" onerror="this.onerror=null;this.src='{{ \App\Support\MediaUrl::url(null, 'images/default.jpg') }}';">
                                     @else
                                         <div class="h-32 w-full bg-gradient-to-br from-blue-100 via-blue-200 to-blue-500"></div>
                                     @endif

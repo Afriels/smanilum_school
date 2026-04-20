@@ -20,7 +20,7 @@
         <div class="mx-auto grid w-full max-w-6xl gap-8 px-4 lg:grid-cols-[minmax(0,1fr)_340px]">
             <article class="rounded-[2rem] border border-blue-100 bg-white/90 p-8 shadow-soft">
                 @if ($page->featured_image_path)
-                    <img src="{{ asset('storage/'.$page->featured_image_path) }}" alt="{{ $page->title }}" class="mb-8 h-72 w-full rounded-[1.5rem] object-cover">
+                    <img src="{{ \App\Support\MediaUrl::url($page->featured_image_path, 'images/default.jpg') }}" alt="{{ $page->title }}" class="mb-8 h-72 w-full rounded-[1.5rem] object-cover">
                 @endif
                 <div class="prose prose-slate max-w-none prose-headings:text-ink prose-a:text-primary">
                     {!! $page->content !!}
@@ -41,4 +41,3 @@
         </div>
     </section>
 @endsection
-

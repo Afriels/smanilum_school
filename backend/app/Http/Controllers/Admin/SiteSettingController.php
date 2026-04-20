@@ -39,8 +39,8 @@ class SiteSettingController extends Controller
             'extracurricular_count' => ['nullable', 'string', 'max:40'],
             'graduation_rate' => ['nullable', 'string', 'max:40'],
             'map_embed_url' => ['nullable', 'string', 'max:255'],
-            'logo' => ['nullable', 'mimes:jpg,jpeg,png,svg', 'max:2048'],
-            'favicon' => ['nullable', 'mimes:png,ico', 'max:1024'],
+            'logo' => $this->logoValidationRules(false),
+            'favicon' => $this->faviconValidationRules(false),
             'remove_logo' => ['nullable', 'boolean'],
             'remove_favicon' => ['nullable', 'boolean'],
         ]);
@@ -59,14 +59,14 @@ class SiteSettingController extends Controller
 
         if ($request->hasFile('logo')) {
             $this->deletePublicFile($settings['logo']->value ?? null);
-            $validated['logo'] = $this->storeImage($request->file('logo'), 'logo');
+            $validated['logo'] = $this->storeSupabaseMedia($request->file('logo'), 'logos', 'site');
         } elseif (! array_key_exists('logo', $validated)) {
             unset($validated['logo']);
         }
 
         if ($request->hasFile('favicon')) {
             $this->deletePublicFile($settings['favicon']->value ?? null);
-            $validated['favicon'] = $this->storeFavicon($request);
+            $validated['favicon'] = $this->storeSupabaseMedia($request->file('favicon'), 'favicons', 'site');
         } elseif (! array_key_exists('favicon', $validated)) {
             unset($validated['favicon']);
         }
@@ -89,21 +89,6 @@ class SiteSettingController extends Controller
 
         return redirect()->route('admin.settings.edit')->with('success', 'Pengaturan website berhasil diperbarui.');
     }
-
-    protected function storeFavicon(Request $request): ?string
-    {
-        $file = $request->file('favicon');
-
-        if (! $file) {
-            return null;
-        }
-
-        $extension = strtolower($file->getClientOriginalExtension());
-        $filename = 'favicon-'.strtolower((string) str()->random(10)).'.'.$extension;
-
-        return $file->storeAs('favicon', $filename, 'public');
-    }
-
     protected function resolveGroup(string $key): string
     {
         if (in_array($key, ['address', 'phone', 'email', 'facebook_url', 'instagram_url', 'youtube_url', 'map_embed_url'], true)) {

@@ -22,7 +22,7 @@
                                 </div>
                                 <div class="rounded-[1.75rem] bg-white/10 p-5">
                                     @if ($post->featured_image_path)
-                                        <img src="{{ asset('storage/'.$post->featured_image_path) }}" alt="{{ $post->title }}" class="h-72 w-full rounded-[1.5rem] object-cover">
+                                        <img src="{{ \App\Support\MediaUrl::url($post->featured_image_path, 'images/default.jpg') }}" alt="{{ $post->title }}" class="h-72 w-full rounded-[1.5rem] object-cover">
                                     @else
                                         <div class="flex h-72 w-full items-center justify-center rounded-[1.5rem] bg-white/10 text-center text-lg font-semibold text-white/80">
                                             Featured News
@@ -48,7 +48,7 @@
                         </div>
                         <div class="rounded-[1.75rem] bg-white/10 p-5">
                             @if($fallbackBanner?->image_path)
-                                <img src="{{ asset('storage/'.$fallbackBanner->image_path) }}" alt="{{ $fallbackBanner->title }}" class="h-72 w-full rounded-[1.5rem] object-cover">
+                                <img src="{{ \App\Support\MediaUrl::url($fallbackBanner->image_path, 'images/default.jpg') }}" alt="{{ $fallbackBanner->title }}" class="h-72 w-full rounded-[1.5rem] object-cover">
                             @else
                                 <div class="flex h-72 items-center justify-center rounded-[1.5rem] bg-white/10 text-center text-xl font-semibold text-white/80">Banner Default Sekolah</div>
                             @endif
@@ -118,7 +118,7 @@
             @foreach ($latestPosts as $post)
                 <article class="overflow-hidden rounded-[1.75rem] border border-blue-100 bg-white/90 shadow-soft">
                     @if ($post->featured_image_path)
-                        <img src="{{ asset('storage/'.$post->featured_image_path) }}" alt="{{ $post->title }}" class="h-56 w-full object-cover">
+                        <img src="{{ \App\Support\MediaUrl::url($post->featured_image_path, 'images/default.jpg') }}" alt="{{ $post->title }}" class="h-56 w-full object-cover">
                     @else
                         <div class="h-56 bg-gradient-to-br from-blue-100 via-blue-200 to-blue-500"></div>
                     @endif
@@ -144,7 +144,7 @@
                 <div class="mt-8 grid gap-4 sm:grid-cols-2">
                     @foreach ($galleries as $gallery)
                         <a href="{{ route('public.galleries.show', $gallery->slug) }}" class="rounded-[1.5rem] border border-blue-100 bg-white/90 p-5 shadow-soft">
-                            <div class="mb-4 h-40 rounded-[1.25rem] bg-gradient-to-br from-blue-100 via-blue-200 to-blue-500 @if($gallery->cover_image_path) bg-none @endif" @if($gallery->cover_image_path) style="background-image:url('{{ asset('storage/'.$gallery->cover_image_path) }}');background-size:cover;background-position:center;" @endif></div>
+                            <div class="mb-4 h-40 rounded-[1.25rem] bg-gradient-to-br from-blue-100 via-blue-200 to-blue-500 @if($gallery->cover_image_path) bg-none @endif" @if($gallery->cover_image_path) style="background-image:url('{{ \App\Support\MediaUrl::url($gallery->cover_image_path, 'images/default.jpg') }}');background-size:cover;background-position:center;" @endif></div>
                             <div class="font-bold">{{ $gallery->title }}</div>
                             <div class="mt-2 text-sm leading-7 text-slate-600">{{ $gallery->description }}</div>
                         </a>

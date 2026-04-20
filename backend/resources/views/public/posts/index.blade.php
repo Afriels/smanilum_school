@@ -28,7 +28,7 @@
             @forelse ($posts as $post)
                 <article class="overflow-hidden rounded-[1.75rem] border border-blue-100 bg-white/90 shadow-soft">
                     @if ($post->featured_image_path)
-                        <img src="{{ asset('storage/'.$post->featured_image_path) }}" alt="{{ $post->title }}" class="h-56 w-full object-cover">
+                        <img src="{{ \App\Support\MediaUrl::url($post->featured_image_path, 'images/default.jpg') }}" alt="{{ $post->title }}" class="h-56 w-full object-cover">
                     @else
                         <div class="h-56 bg-gradient-to-br from-blue-100 via-blue-200 to-blue-500"></div>
                     @endif
@@ -53,4 +53,3 @@
         </div>
     </section>
 @endsection
-

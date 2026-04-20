@@ -31,7 +31,7 @@ class BannerController extends Controller
     {
         $validated = $this->validateBanner($request);
         $validated['slug'] = $validated['slug'] ?: Str::slug($validated['title']);
-        $validated['image_path'] = $this->storeImage($request->file('image'), 'banners');
+        $validated['image_path'] = $this->storeSupabaseMedia($request->file('image'), 'banners', 'slides');
         $banner = Banner::query()->create($validated);
         ActivityLogger::log('banner.created', 'Banner dibuat.', $banner);
 
@@ -50,7 +50,7 @@ class BannerController extends Controller
 
         if ($request->hasFile('image')) {
             $this->deletePublicFile($banner->image_path);
-            $validated['image_path'] = $this->storeImage($request->file('image'), 'banners');
+            $validated['image_path'] = $this->storeSupabaseMedia($request->file('image'), 'banners', 'slides');
         }
 
         $banner->update($validated);
@@ -81,10 +81,9 @@ class BannerController extends Controller
             'secondary_cta_url' => ['nullable', 'string', 'max:190'],
             'status' => ['required', 'in:draft,published,archived'],
             'sort_order' => ['nullable', 'integer', 'min:0'],
-            'image' => $this->imageValidationRules(false),
+            'image' => $this->imageValidationRules(false, ['jpg', 'jpeg', 'png', 'webp'], 5120),
         ]) + [
             'is_active' => $request->boolean('is_active'),
         ];
     }
 }
-

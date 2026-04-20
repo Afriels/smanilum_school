@@ -2,8 +2,8 @@
 <html lang="id">
 <head>
     @php
-        $loginLogoUrl = !empty($siteSettings['logo']) ? asset('storage/'.$siteSettings['logo']) : asset('images/logo-default.svg');
-        $loginFaviconUrl = !empty($siteSettings['favicon']) ? asset('storage/'.$siteSettings['favicon']) : asset('images/favicon.ico');
+        $loginLogoUrl = \App\Support\MediaUrl::url($siteSettings['logo'] ?? null, 'images/logo-default.svg');
+        $loginFaviconUrl = \App\Support\MediaUrl::url($siteSettings['favicon'] ?? null, 'images/favicon.ico');
     @endphp
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

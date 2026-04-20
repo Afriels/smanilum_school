@@ -36,7 +36,7 @@ class PostController extends Controller
         $validated = $this->validatePost($request);
         $validated['slug'] = $validated['slug'] ?: Str::slug($validated['title']);
         $validated['author_id'] = $request->user()->id;
-        $validated['featured_image_path'] = $this->storeImage($request->file('featured_image'), 'posts');
+        $validated['featured_image_path'] = $this->storeSupabaseMedia($request->file('featured_image'), 'posts', 'thumbnails');
 
         if ($validated['status'] === 'published' && empty($validated['published_at'])) {
             $validated['published_at'] = now();
@@ -63,7 +63,7 @@ class PostController extends Controller
 
         if ($request->hasFile('featured_image')) {
             $this->deletePublicFile($post->featured_image_path);
-            $validated['featured_image_path'] = $this->storeImage($request->file('featured_image'), 'posts');
+            $validated['featured_image_path'] = $this->storeSupabaseMedia($request->file('featured_image'), 'posts', 'thumbnails');
         }
 
         if ($validated['status'] === 'published' && empty($validated['published_at'])) {
@@ -99,7 +99,7 @@ class PostController extends Controller
             'seo_description' => ['nullable', 'string'],
             'is_featured' => ['nullable', 'boolean'],
             'show_in_slider' => ['nullable', 'boolean'],
-            'featured_image' => $this->imageValidationRules(false),
+            'featured_image' => $this->imageValidationRules(false, ['jpg', 'jpeg', 'png', 'webp'], 5120),
         ]) + [
             'type' => 'news',
             'category' => null,
@@ -108,4 +108,3 @@ class PostController extends Controller
         ];
     }
 }
-

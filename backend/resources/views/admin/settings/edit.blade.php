@@ -5,8 +5,8 @@
 @php
     $currentLogo = $settings['logo']->value ?? null;
     $currentFavicon = $settings['favicon']->value ?? null;
-    $logoUrl = $currentLogo ? asset('storage/'.$currentLogo) : asset('images/logo-default.svg');
-    $faviconUrl = $currentFavicon ? asset('storage/'.$currentFavicon) : asset('images/favicon.ico');
+    $logoUrl = \App\Support\MediaUrl::url($currentLogo, 'images/logo-default.svg');
+    $faviconUrl = \App\Support\MediaUrl::url($currentFavicon, 'images/favicon.ico');
 @endphp
 
 @section('content')

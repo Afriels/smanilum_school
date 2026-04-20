@@ -16,7 +16,7 @@
             @foreach ($galleries as $gallery)
                 <a href="{{ route('public.galleries.show', $gallery->slug) }}" class="overflow-hidden rounded-[1.75rem] border border-blue-100 bg-white/90 shadow-soft">
                     @if ($gallery->cover_image_path)
-                        <img src="{{ asset('storage/'.$gallery->cover_image_path) }}" alt="{{ $gallery->title }}" class="h-64 w-full object-cover">
+                        <img src="{{ \App\Support\MediaUrl::url($gallery->cover_image_path, 'images/default.jpg') }}" alt="{{ $gallery->title }}" class="h-64 w-full object-cover">
                     @else
                         <div class="h-64 bg-gradient-to-br from-blue-100 via-blue-200 to-blue-500"></div>
                     @endif
@@ -32,4 +32,3 @@
         </div>
     </section>
 @endsection
-

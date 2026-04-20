@@ -89,6 +89,27 @@ Semua operasi upload dilakukan dari backend Laravel. Database menyimpan nilai UR
    - halaman publik memuat gambar dari domain Supabase
 8. Ubah file yang sama sekali lagi dan pastikan file lama terhapus dari bucket jika policy delete aktif.
 
+## Perbaikan URL Lama
+
+Jika ada data lama yang masih menyimpan URL seperti:
+
+```text
+https://...supabase.co/storage/v1/object/<bucket>/<path>
+```
+
+jalankan command Laravel berikut:
+
+```powershell
+php artisan media:fix-supabase-urls --dry-run
+php artisan media:fix-supabase-urls
+```
+
+Command ini akan memperbaiki URL menjadi format public yang benar:
+
+```text
+https://...supabase.co/storage/v1/object/public/<bucket>/<path>
+```
+
 ## Catatan Verifikasi
 
 Di environment pengembangan ini saya bisa memverifikasi integrasi kode dan alur build Laravel/Blade, tetapi tidak bisa menyelesaikan upload live ke project Supabase tanpa akses network runtime dan policy bucket aktif di project Supabase Anda.

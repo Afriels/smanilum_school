@@ -9,5 +9,8 @@ frontend/.env.local
 .vercel
 frontend/.vercel
 frontend/.git.backup
+.agents
+.windsurf
+skills-lock.json
 .DS_Store
 Thumbs.db

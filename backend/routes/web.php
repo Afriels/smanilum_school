@@ -19,6 +19,12 @@ use App\Http\Controllers\Public\PageController;
 use App\Http\Controllers\Public\PostController;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/healthz', fn () => response()->json([
+    'status' => 'ok',
+    'app' => config('app.name'),
+    'environment' => app()->environment(),
+]))->name('healthz');
+
 Route::get('/', HomeController::class)->name('public.home');
 Route::get('/profil', fn () => redirect()->route('public.pages.show', 'profil-sekolah'))->name('public.profile');
 Route::get('/akademik', fn () => redirect()->route('public.pages.show', 'akademik'))->name('public.academic');

@@ -61,6 +61,7 @@ Pilihan realistis:
 - Laravel Forge
 - Shared hosting modern
 - Platform PHP lain yang kompatibel
+- Railway
 
 Gunakan document root ke `backend/public`.
 
@@ -77,6 +78,8 @@ Pastikan production backend menyiapkan:
 - storage write access
 - `php artisan storage:link`
 - `php artisan migrate --force`
+
+Untuk Railway, panduan yang spesifik ke repo ini ada di [docs/railway-backend.md](/abs/c:/xampp/htdocs/smanilum/docs/railway-backend.md:1). File [backend/railway.toml](/abs/c:/xampp/htdocs/smanilum/backend/railway.toml:1) dan [backend/railway/predeploy.sh](/abs/c:/xampp/htdocs/smanilum/backend/railway/predeploy.sh:1) sudah disiapkan agar `migrate --force` dan init dasar bisa jalan otomatis saat deploy.
 
 ## Migrasi dari Lokal ke Production
 

@@ -37,7 +37,7 @@ npm run dev
 ## Deploy Frontend ke Vercel
 
 1. Import repository GitHub ke Vercel.
-2. Saat setup project, set `Root Directory` ke `frontend`.
+2. Set `Framework Preset` ke `Services`.
 3. Tambahkan environment variable:
 
 ```env
@@ -45,11 +45,12 @@ NEXT_PUBLIC_SITE_URL=https://your-frontend.vercel.app
 NEXT_PUBLIC_BACKEND_URL=https://your-backend-domain.example.com
 ```
 
-4. Deploy dengan preset Next.js bawaan Vercel.
+4. Deploy. Service `frontend` akan dibaca dari `vercel.json` root repo.
 
 Catatan:
 
-- `frontend/vercel.json` sudah disiapkan agar framework terbaca sebagai `nextjs`.
+- `vercel.json` harus berada di root repo untuk mode multi-service.
+- Saat ini hanya `frontend` yang didaftarkan sebagai service.
 - Tautan admin dan endpoint API demo di frontend sudah memakai env, tidak lagi hardcoded ke localhost.
 
 ## Deploy Backend Laravel
@@ -62,6 +63,12 @@ Pilihan realistis:
 - Platform PHP lain yang kompatibel
 
 Gunakan document root ke `backend/public`.
+
+Catatan penting:
+
+- Konfigurasi `backend` sebagai Vercel Service belum ditambahkan karena repo ini memakai Laravel/PHP.
+- Menetapkan `framework: "vite"` untuk folder `backend` tidak akan menjalankan aplikasi Laravel; itu hanya relevan untuk build asset Vite.
+- Berdasarkan dokumentasi Vercel Services terbaru, fitur ini masih Private Beta dan yang disebut production-ready terutama Python dan Go. Saya tidak menebak konfigurasi PHP service yang belum tervalidasi untuk repo ini.
 
 Pastikan production backend menyiapkan:
 

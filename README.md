@@ -127,7 +127,8 @@ Editor:
 ### Frontend ke Vercel
 
 - Import repository ini ke Vercel
-- Set `Root Directory` ke `frontend`
+- Gunakan `Framework Preset: Services`
+- Repo ini sudah punya [vercel.json](/abs/c:/xampp/htdocs/smanilum/vercel.json:1) di root untuk service `frontend`
 - Tambahkan env berikut:
 
 ```env
@@ -135,11 +136,11 @@ NEXT_PUBLIC_SITE_URL=https://nama-project-anda.vercel.app
 NEXT_PUBLIC_BACKEND_URL=https://backend-anda.example.com
 ```
 
-- Deploy sebagai project Next.js
+- Deploy project
 
 ### Backend Laravel
 
-Backend Laravel tidak cocok dijalankan sebagai aplikasi utama pada alur Vercel standar repo ini. Deploy backend ke hosting PHP yang kompatibel, misalnya VPS, Forge, shared hosting modern, atau platform PHP lain, lalu arahkan `NEXT_PUBLIC_BACKEND_URL` frontend ke domain backend tersebut.
+Backend Laravel belum saya daftarkan sebagai Vercel Service di `vercel.json`. Alasannya, backend ini adalah aplikasi PHP Laravel, sedangkan konfigurasi seperti `framework: "vite"` hanya cocok untuk build asset frontend, bukan untuk menjalankan runtime Laravel. Untuk saat ini, deploy backend ke hosting PHP yang kompatibel, misalnya VPS, Forge, shared hosting modern, atau platform PHP lain, lalu arahkan `NEXT_PUBLIC_BACKEND_URL` frontend ke domain backend tersebut.
 
 ## Verifikasi Lokal yang Sudah Pernah Dilakukan
 

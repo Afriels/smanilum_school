@@ -30,8 +30,8 @@ NEXT_PUBLIC_BACKEND_URL=http://localhost/smanilum/backend/public
 
 Saat import repository ini ke Vercel:
 
-- pilih folder `frontend` sebagai `Root Directory`
-- biarkan framework terdeteksi sebagai `Next.js`
+- gunakan `Framework Preset: Services`
+- biarkan root repo memakai `vercel.json`
 - isi `NEXT_PUBLIC_SITE_URL` dengan URL Vercel frontend
 - isi `NEXT_PUBLIC_BACKEND_URL` dengan domain backend Laravel production
 

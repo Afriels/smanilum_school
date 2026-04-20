@@ -1,4 +1,5 @@
 const fallbackSiteUrl = "https://smanilum.vercel.app";
+const localBackendUrl = "http://localhost/smanilum/backend/public";
 
 function trimTrailingSlash(value: string) {
   return value.replace(/\/+$/, "");
@@ -17,10 +18,17 @@ export const frontendSiteUrl = readUrl(
   fallbackSiteUrl,
 );
 
-export const backendBaseUrl = readUrl(
-  process.env.NEXT_PUBLIC_BACKEND_URL,
-  "http://localhost/smanilum/backend/public",
-);
+const configuredBackendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+export const backendBaseUrl = configuredBackendUrl
+  ? readUrl(configuredBackendUrl, localBackendUrl)
+  : process.env.NODE_ENV === "development"
+    ? localBackendUrl
+    : "";
 
-export const adminLoginUrl = `${backendBaseUrl}/admin/login`;
-export const publicApiHomeUrl = `${backendBaseUrl}/api/v1/public/home`;
+export const adminLoginUrl = backendBaseUrl
+  ? `${backendBaseUrl}/admin/login`
+  : "/admin";
+
+export const publicApiHomeUrl = backendBaseUrl
+  ? `${backendBaseUrl}/api/v1/public/home`
+  : "/admin";
